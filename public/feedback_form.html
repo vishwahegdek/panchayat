@@ -3,261 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Village Panchayat - Citizen Feedback Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        
-        .header {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .title {
-            font-size: 24px;
-            color: #333;
-            margin: 0;
-        }
-        
-        .user-btn {
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 8px 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .form-container {
-            background-color: #fff;
-            margin: 20px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .form-header {
-            background-color: #2e7d64;
-            color: white;
-            padding: 15px 20px;
-            font-size: 20px;
-        }
-        
-        .form-body {
-            padding: 20px;
-        }
-        
-        .info-box {
-            border-left: 4px solid #2e7d64;
-            background-color: #f9f9f9;
-            padding: 10px 15px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .info-icon {
-            margin-right: 10px;
-            color: #2e7d64;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        
-        .required::after {
-            content: " *";
-            color: red;
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .rating-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-        }
-        
-        .rating-item {
-            text-align: center;
-        }
-        
-        .rating-item input {
-            width: auto;
-            margin-top: 5px;
-        }
-        
-        button {
-            background-color: #2e7d64;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 4px;
-            margin-top: 20px;
-        }
-        
-        button:hover {
-            background-color: #236b53;
-        }
-        
-        .feedback-type {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-        }
-        
-        .feedback-type label {
-            font-weight: normal;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .feedback-type input {
-            width: auto;
-        }
-    </style>
+    <title>Citizen Feedback - Village Panchayat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/schemes.css">
+    <link rel="stylesheet" href="css/application_form.css">
 </head>
 <body>
-    <div class="header">
-        <h1 class="title">Submit Feedback</h1>
-        <button class="user-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-            </svg>
-            User
-        </button>
-    </div>
-    
-    <div class="form-container">
-        <div class="form-header">Citizen Feedback Form</div>
-        <div class="form-body">
-            <div class="info-box">
-                <div class="info-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                    </svg>
-                </div>
-                <span>Feedback ID: FDB-2025-45872</span>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2 col-md-3 p-0 sidebar">
+                <div id="sidebar-placeholder"></div>
             </div>
-            
-            <div class="form-group">
-                <label class="required" for="citizen-name">Citizen Name</label>
-                <input type="text" id="citizen-name" placeholder="Enter full name">
-            </div>
-            
-            <div class="form-group">
-                <label class="required" for="village-name">Village Name</label>
-                <input type="text" id="village-name" placeholder="Enter village name">
-            </div>
-            
-            <div class="form-group">
-                <label class="required" for="aadhar">Aadhar Number</label>
-                <input type="text" id="aadhar" placeholder="12-digit Aadhar number">
-            </div>
-            
-            <div class="form-group">
-                <label class="required" for="contact">Contact Number</label>
-                <input type="tel" id="contact" placeholder="10-digit mobile number">
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="Enter email address (optional)">
-            </div>
-            
-            <div class="form-group">
-                <label class="required">Feedback Type</label>
-                <div class="feedback-type">
-                    <label><input type="radio" name="feedback-type" value="suggestion"> Suggestion</label>
-                    <label><input type="radio" name="feedback-type" value="complaint"> Complaint</label>
-                    <label><input type="radio" name="feedback-type" value="appreciation"> Appreciation</label>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="required" for="department">Department/Service</label>
-                <select id="department">
-                    <option value="">Select department</option>
-                    <option value="water">Water Supply</option>
-                    <option value="sanitation">Sanitation & Waste Management</option>
-                    <option value="roads">Roads & Infrastructure</option>
-                    <option value="electricity">Street Lighting</option>
-                    <option value="certificates">Certificate Services</option>
-                    <option value="schemes">Government Schemes</option>
-                    <option value="education">Education</option>
-                    <option value="health">Health & Medical Services</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label class="required" for="feedback-details">Feedback Details</label>
-                <textarea id="feedback-details" placeholder="Please provide detailed information about your feedback"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label class="required">Service Quality Rating</label>
-                <div class="rating-container">
-                    <div class="rating-item">
-                        <label>Poor</label>
-                        <input type="radio" name="rating" value="1">
-                    </div>
-                    <div class="rating-item">
-                        <label>Fair</label>
-                        <input type="radio" name="rating" value="2">
-                    </div>
-                    <div class="rating-item">
-                        <label>Average</label>
-                        <input type="radio" name="rating" value="3">
-                    </div>
-                    <div class="rating-item">
-                        <label>Good</label>
-                        <input type="radio" name="rating" value="4">
-                    </div>
-                    <div class="rating-item">
-                        <label>Excellent</label>
-                        <input type="radio" name="rating" value="5">
+
+            <!-- Main Content -->
+            <div class="col-lg-10 col-md-9 content-wrapper">
+                <div class="header d-flex justify-content-between align-items-center">
+                    <h4 class="m-0">Submit Feedback</h4>
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle me-1"></i> User
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-bell me-2"></i> Notifications</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                
+                <!-- Status Check Section -->
+                <div class="header align-items-center justify-content-between">
+                    <h4 class="form-section-title">
+                        <i class="fas fa-search me-2"></i> Check Feedback Status
+                    </h4>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <label for="checkFeedbackId" class="form-label">Feedback ID</label>
+                            <input type="text" class="form-control" id="checkFeedbackId" placeholder="Enter feedback ID to check status">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="button" class="btn btn-outline-primary">
+                                <i class="fas fa-search me-1"></i> Check Status
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Area -->
+                <div id="content-area">
+                    <div class="application-page-content active fade-in">
+                        <!-- Feedback Form Card -->
+                        <div class="card application-card">
+                            <div class="card-header application-header">
+                                <h3 class="mb-0">Citizen Feedback Form</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info d-flex align-items-center mb-4">
+                                    <i class="fas fa-info-circle me-3 fs-4"></i>
+                                    <div>
+                                        <strong>Feedback ID:</strong> FDB-2025-45872
+                                    </div>
+                                </div>
+
+                                <form id="feedbackForm">
+                                    <!-- Citizen Information Section -->
+                                    <div class="form-section">
+                                        <h4 class="form-section-title">
+                                            <i class="fas fa-user me-2"></i> Citizen Information
+                                        </h4>
+                                        
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="citizenName" class="form-label required">Citizen Name</label>
+                                                <input type="text" class="form-control" id="citizenName" name="citizenName" placeholder="Enter full name" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="villageName" class="form-label required">Village Name</label>
+                                                <input type="text" class="form-control" id="villageName" name="villageName" placeholder="Enter village name" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="aadharNumber" class="form-label required">Aadhar Number</label>
+                                                <input type="text" class="form-control" id="aadharNumber" name="aadharNumber" placeholder="12-digit Aadhar number" pattern="[0-9]{12}" required>
+                                                <div class="form-text">Enter 12-digit Aadhar number without spaces</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="mobileNumber" class="form-label required">Contact Number</label>
+                                                <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+                                                <div class="form-text">Enter 10-digit mobile number for updates</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="emailAddress" class="form-label">Email Address</label>
+                                                <input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter email address (optional)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Feedback Details Section -->
+                                    <div class="form-section">
+                                        <h4 class="form-section-title">
+                                            <i class="fas fa-comment-alt me-2"></i> Feedback Details
+                                        </h4>
+                                        
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label required">Feedback Type</label>
+                                                <div class="d-flex flex-wrap gap-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="feedbackType" id="suggestionType" value="suggestion" required>
+                                                        <label class="form-check-label" for="suggestionType">Suggestion</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="feedbackType" id="complaintType" value="complaint">
+                                                        <label class="form-check-label" for="complaintType">Complaint</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="feedbackType" id="appreciationType" value="appreciation">
+                                                        <label class="form-check-label" for="appreciationType">Appreciation</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="department" class="form-label required">Department/Service</label>
+                                                <select class="form-select" id="department" name="department" required>
+                                                    <option value="">Select department</option>
+                                                    <option value="water">Water Supply</option>
+                                                    <option value="sanitation">Sanitation & Waste Management</option>
+                                                    <option value="roads">Roads & Infrastructure</option>
+                                                    <option value="electricity">Street Lighting</option>
+                                                    <option value="certificates">Certificate Services</option>
+                                                    <option value="schemes">Government Schemes</option>
+                                                    <option value="education">Education</option>
+                                                    <option value="health">Health & Medical Services</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="feedbackDetails" class="form-label required">Feedback Details</label>
+                                                <textarea class="form-control" id="feedbackDetails" name="feedbackDetails" rows="4" placeholder="Please provide detailed information about your feedback" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Service Quality Rating Section -->
+                                    <div class="form-section">
+                                        <h4 class="form-section-title">
+                                            <i class="fas fa-star me-2"></i> Service Quality Rating
+                                        </h4>
+                                        
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <label class="form-label required">Rate the quality of service</label>
+                                                <div class="rating-container d-flex flex-wrap gap-3 mb-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="rating" id="rating1" value="1" required>
+                                                        <label class="form-check-label" for="rating1">Poor</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="rating" id="rating2" value="2">
+                                                        <label class="form-check-label" for="rating2">Fair</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="rating" id="rating3" value="3">
+                                                        <label class="form-check-label" for="rating3">Average</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="rating" id="rating4" value="4">
+                                                        <label class="form-check-label" for="rating4">Good</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="rating" id="rating5" value="5">
+                                                        <label class="form-check-label" for="rating5">Excellent</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="suggestions" class="form-label">Suggestions for Improvement</label>
+                                                <textarea class="form-control" id="suggestions" name="suggestions" rows="3" placeholder="Please share your suggestions for improvement (optional)"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Document Submission Section -->
+                                    <div class="form-section">
+                                        <h4 class="form-section-title">
+                                            <i class="fas fa-file-alt me-2"></i> Supporting Documents (Optional)
+                                        </h4>
+                                        
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <div class="form-text mb-2">Upload supporting documents if you have any (e.g., photos, receipts)</div>
+                                                
+                                                <div class="document-upload-area">
+                                                    <div class="document-upload-box">
+                                                        <input type="file" id="documentUpload" class="document-upload-input" multiple>
+                                                        <label for="documentUpload" class="document-upload-label">
+                                                            <i class="fas fa-cloud-upload-alt"></i>
+                                                            <span>Drag & drop files or click to browse</span>
+                                                        </label>
+                                                    </div>
+                                                    
+                                                    <div id="fileNameDisplay" class="form-text mt-2">No file chosen</div>
+                                                </div>
+                                                
+                                                <div id="documentsContainer" class="document-list mt-3">
+                                                    <!-- Uploaded documents will appear here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Form Actions -->
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-accent">
+                                            <i class="fas fa-paper-plane me-1"></i> Submit Feedback
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="suggestions">Suggestions for Improvement</label>
-                <textarea id="suggestions" placeholder="Please share your suggestions for improvement (optional)"></textarea>
-            </div>
-            
-            <button type="submit">Submit Feedback</button>
         </div>
     </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Document upload functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load sidebar
+            fetch("sidebar.html")
+                .then((response) => response.text())
+                .then((data) => {
+                    document.getElementById("sidebar-placeholder").innerHTML = data;
+                });
+
+            // Document upload handling
+            const fileInput = document.getElementById('documentUpload');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            const documentsContainer = document.getElementById('documentsContainer');
+
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    fileNameDisplay.textContent = `${this.files.length} file(s) selected`;
+
+                    // Clear previous documents
+                    documentsContainer.innerHTML = '';
+
+                    // Add document items
+                    Array.from(this.files).forEach(file => {
+                        const fileSize = (file.size / 1024).toFixed(2) + ' KB';
+                        const docItem = document.createElement('div');
+                        docItem.className = 'document-item';
+
+                        // Determine file icon based on type
+                        let fileIcon = 'fa-file';
+                        if (file.type.includes('image')) {
+                            fileIcon = 'fa-file-image';
+                        } else if (file.type.includes('pdf')) {
+                            fileIcon = 'fa-file-pdf';
+                        } else if (file.type.includes('word') || file.name.endsWith('.doc') || file.name.endsWith('.docx')) {
+                            fileIcon = 'fa-file-word';
+                        }
+
+                        docItem.innerHTML = `
+                            <i class="far ${fileIcon}"></i>
+                            <div class="document-name">${file.name}</div>
+                            <div class="document-size">${fileSize}</div>
+                            <button type="button" class="btn-remove-document">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        documentsContainer.appendChild(docItem);
+
+                        // Add click event for remove button
+                        docItem.querySelector('.btn-remove-document').addEventListener('click', function() {
+                            docItem.remove();
+                            if (documentsContainer.children.length === 0) {
+                                fileNameDisplay.textContent = 'No file chosen';
+                            } else {
+                                fileNameDisplay.textContent = `${documentsContainer.children.length} file(s) selected`;
+                            }
+                        });
+                    });
+                } else {
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
+
+            // Form submission handling
+            const feedbackForm = document.getElementById('feedbackForm');
+
+            feedbackForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Check form validity
+                if (!feedbackForm.checkValidity()) {
+                    feedbackForm.reportValidity();
+                    return;
+                }
+
+                try {
+                    // Create form data object
+                    const formData = {
+                        citizenName: document.getElementById('citizenName').value,
+                        villageName: document.getElementById('villageName').value,
+                        aadharNumber: document.getElementById('aadharNumber').value,
+                        mobileNumber: document.getElementById('mobileNumber').value,
+                        emailAddress: document.getElementById('emailAddress').value,
+                        feedbackType: document.querySelector('input[name="feedbackType"]:checked').value,
+                        department: document.getElementById('department').value,
+                        feedbackDetails: document.getElementById('feedbackDetails').value,
+                        rating: document.querySelector('input[name="rating"]:checked').value,
+                        suggestions: document.getElementById('suggestions').value
+                    };
+
+                    // Submit feedback data
+                    const response = await fetch('http://localhost:3000/api/feedback', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(result.error || 'Failed to submit feedback');
+                    }
+
+                    // If documents are present, upload them
+                    const files = fileInput.files;
+                    if (files.length > 0) {
+                        const formData = new FormData();
+
+                        // Append each file to form data
+                        for (let i = 0; i < files.length; i++) {
+                            formData.append('documents', files[i]);
+                        }
+
+                        // Upload documents
+                        const docResponse = await fetch(`http://localhost:3000/api/feedback-documents/${result.feedbackId}`, {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (!docResponse.ok) {
+                            const docError = await docResponse.json();
+                            throw new Error(docError.error || 'Failed to upload documents');
+                        }
+                    }
+
+                    // Show success message using simple alert
+                    alert(`Feedback submitted successfully! Your reference ID is: ${result.feedbackReference}`);
+
+                    // Reset form
+                    feedbackForm.reset();
+                    documentsContainer.innerHTML = '';
+                    fileNameDisplay.textContent = 'No file chosen';
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(error.message);
+                }
+            });
+
+            // Check feedback status
+            const checkStatusBtn = document.querySelector('button[type="button"]');
+            checkStatusBtn.addEventListener('click', async function() {
+                const feedbackId = document.getElementById('checkFeedbackId').value.trim();
+
+                if (!feedbackId) {
+                    alert('Please enter a feedback ID to check status');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`http://localhost:3000/api/feedback/status/${feedbackId}`);
+
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            throw new Error('Feedback not found. Please check the ID and try again.');
+                        }
+                        throw new Error('Failed to fetch feedback status');
+                    }
+
+                    const result = await response.json();
+
+                    // Format status message
+                    const status = result.status.replace('_', ' ').toUpperCase();
+                    const submissionDate = new Date(result.submission_date).toLocaleString();
+                    
+                    // Show status information using simple alert
+                    alert(`Feedback Reference: ${result.feedback_reference}\nStatus: ${status}\nSubmitted on: ${submissionDate}\nDepartment: ${result.department}`);
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(error.message);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

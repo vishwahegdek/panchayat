@@ -9,7 +9,8 @@ CREATE TABLE schemes (
     age_limit INT,
     beneficiary_count INT,
     total_budget DECIMAL(15, 2),
-    details TEXT
+    details TEXT,
+    status VARCHAR(50) DEFAULT 'Active'
 );
 
 
