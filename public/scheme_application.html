@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheme Application - Village Panchayat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/schemes.css">
+    <link rel="stylesheet" href="css/application_form.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2 col-md-3 p-0 sidebar">
+                <div id="sidebar-placeholder"></div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-10 col-md-9 content-wrapper">
+                <div class="header d-flex justify-content-between align-items-center">
+                    <h4 class="m-0">Scheme Application</h4>
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle me-1"></i> User
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-bell me-2"></i> Notifications</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add this section for application status check right before the form actions -->
+                <div class="header align-items-center justify-content-between ">
+                    <h4 class="form-section-title">
+                        <i class="fas fa-search me-2"></i> Check Existing Application
+                    </h4>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <label for="checkApplicationId" class="form-label">Application ID</label>
+                            <input type="text" class="form-control" id="checkApplicationId" placeholder="Enter application ID to check status">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="button" class="btn btn-outline-primary" onclick="checkApplicationStatus(document.getElementById('checkApplicationId').value)">
+                                <i class="fas fa-search me-1"></i> Check Status
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Content Area -->
+                <div id="content-area">
+                    <div class="application-page-content active fade-in">
+                        <!-- Application Form Card -->
+                        <div class="card application-card">
+                            <div class="card-header application-header">
+                                <h3 class="mb-0">Village Panchayat Scheme Application Form</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info d-flex align-items-center mb-4">
+                                    <i class="fas fa-info-circle me-3 fs-4"></i>
+                                    <div>
+                                        <strong>Application ID:</strong> CMP-2025-85046
+                                    </div>
+                                </div>
+
+                                <form id="schemeApplicationForm">
+                                    <!-- Applicant Information Section -->
+                                    <div class="form-section">
+                                        <h4 class="form-section-title">
+                                            <i class="fas fa-user me-2"></i> Applicant Information
+                                        </h4>
+                                        
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="applicantName" class="form-label required">Applicant Name</label>
+                                                <input type="text" class="form-control" id="applicantName" name="applicantName" placeholder="Enter full name" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="villageName" class="form-label required">Village Name</label>
+                                                <input type="text" class="form-control" id="villageName" name="villageName" placeholder="Enter village name" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="aadharNumber" class="form-label required">Aadhar Number</label>
+                                                <input type="text" class="form-control" id="aadharNumber" name="aadharNumber" placeholder="12-digit Aadhar number" pattern="[0-9]{12}" required>
+                                                <div class="form-text">Enter 12-digit Aadhar number without spaces</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="age" class="form-label required">Age</label>
+                                                <input type="number" class="form-control" id="age" name="age" placeholder="Enter age" min="1" max="120" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label required">Gender</label>
+                                                <div class="d-flex">
+                                                    <div class="form-check me-4">
+                                                        <input class="form-check-input" type="radio" id="genderMale" name="gender" value="male" required>
+                                                        <label class="form-check-label" for="genderMale">Male</label>
+                                                    </div>
+                                                    <div class="form-check me-4">
+                                                        <input class="form-check-input" type="radio" id="genderFemale" name="gender" value="female">
+                                                        <label class="form-check-label" for="genderFemale">Female</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="genderOther" name="gender" value="other">
+                                                        <label class="form-check-label" for="genderOther">Other</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Scheme Details Section -->
+                                    <div class="form-section">
+                                        <h4 class="form-section-title">
+                                            <i class="fas fa-clipboard-list me-2"></i> Scheme Details
+                                        </h4>
+                                        
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="schemeName" class="form-label required">Scheme Name</label>
+                                                <input type="text" class="form-control" id="schemeName" name="schemeName" placeholder="Enter scheme name" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="schemeId" class="form-label required">Scheme ID</label>
+                                                <input type="text" class="form-control" id="schemeId" name="schemeId" placeholder="Enter scheme ID" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Document Submission Section -->
+                                    <div class="form-section">
+                                        <h4 class="form-section-title">
+                                            <i class="fas fa-file-alt me-2"></i> Document Submission
+                                        </h4>
+                                        
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <label class="form-label required">Documents</label>
+                                                <div class="form-text mb-2">Upload all necessary documents (ID proof, income certificate, etc.)</div>
+                                                
+                                                <div class="document-upload-area">
+                                                    <div class="document-upload-box">
+                                                        <input type="file" id="documentUpload" class="document-upload-input" multiple>
+                                                        <label for="documentUpload" class="document-upload-label">
+                                                            <i class="fas fa-cloud-upload-alt"></i>
+                                                            <span>Drag & drop files or click to browse</span>
+                                                        </label>
+                                                    </div>
+                                                    
+                                                    <div id="fileNameDisplay" class="form-text mt-2">No file chosen</div>
+                                                </div>
+                                                
+                                                <div id="documentsContainer" class="document-list mt-3">
+                                                    <!-- Uploaded documents will appear here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Application Status Section -->
+                                    <div class="form-section">
+                                        <h4 class="form-section-title">
+                                            <i class="fas fa-check-circle me-2"></i> Application Status
+                                        </h4>
+                                        
+                                        <div class="row g-3">
+                                            <div class="col-md-12">
+                                                <label class="form-label">Status</label>
+                                                <div class="d-flex">
+                                                    <div class="form-check me-4">
+                                                        <input class="form-check-input" type="radio" id="statusPending" name="applicationStatus" value="pending" checked>
+                                                        <label class="form-check-label status-badge pending" for="statusPending">Pending</label>
+                                                    </div>
+                                                    <div class="form-check me-4">
+                                                        <input class="form-check-input" type="radio" id="statusApproved" name="applicationStatus" value="approved">
+                                                        <label class="form-check-label status-badge approved" for="statusApproved">Approved</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="statusRejected" name="applicationStatus" value="rejected">
+                                                        <label class="form-check-label status-badge rejected" for="statusRejected">Rejected</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-12" id="rejectionReasonGroup" style="display: none;">
+                                                <label for="rejectionReason" class="form-label required">Reason for Rejection</label>
+                                                <textarea class="form-control" id="rejectionReason" name="rejectionReason" rows="3" placeholder="Provide detailed reason for rejection"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Form Actions -->
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-outline-secondary me-2">
+                                            <i class="fas fa-times me-1"></i> Cancel
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-paper-plane me-1"></i> Submit Application
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="js/application_form.js"></script>
+</body>
+</html>

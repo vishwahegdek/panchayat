@@ -1,0 +1,179 @@
+<!-- schemes_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schemes Management - Village Panchayat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/schemes.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2 col-md-3 p-0 sidebar">
+                <div id="sidebar-placeholder"></div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-10 col-md-9 content-wrapper">
+                <div class="header d-flex justify-content-between align-items-center">
+                    <h4 class="m-0">Schemes Management</h4>
+                    <div class="d-flex align-items-center">
+                        <!-- <div class="search-box me-3">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="form-control" placeholder="Search...">
+                        </div> -->
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle me-1"></i> User
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-bell me-2"></i> Notifications</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Area -->
+                <div id="content-area">
+                    <div class="scheme-page-content active fade-in">
+                        <!-- Banner -->
+                        <div class="scheme-banner">
+                            <h2>Government Schemes & Benefits</h2>
+                            <p>Explore various schemes offered by the government to support rural development, education, healthcare, and more. Find schemes that you're eligible for and apply directly through our portal.</p>
+                            <a href="scheme_application.html" class="btn btn-light">
+                                <i class="fas fa-file-alt me-2"></i> Apply for a Scheme
+                            </a>
+                        </div>
+                        
+                        <!-- Stats -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="scheme-stat">
+                                    <div class="scheme-stat-icon">
+                                        <i class="fas fa-clipboard-list"></i>
+                                    </div>
+                                    <div>
+                                        <h3>16</h3>
+                                        <p>Total Active Schemes</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="scheme-stat yellow">
+                                    <div class="scheme-stat-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div>
+                                        <h3>3,245</h3>
+                                        <p>Total Beneficiaries</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="scheme-stat blue">
+                                    <div class="scheme-stat-icon">
+                                        <i class="fas fa-rupee-sign"></i>
+                                    </div>
+                                    <div>
+                                        <h3>₹ 1.2 Cr</h3>
+                                        <p>Total Budget Allocated</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="scheme-stat">
+                                    <div class="scheme-stat-icon">
+                                        <i class="fas fa-file-signature"></i>
+                                    </div>
+                                    <div>
+                                        <h3>152</h3>
+                                        <p>Applications This Month</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Filters and Search -->
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="mb-3">Filter by Category</h5>
+                                        <div class="scheme-filter">
+                                            <div class="filter-pill active">All</div>
+                                            <div class="filter-pill">Agricultural</div>
+                                            <div class="filter-pill">Educational</div>
+                                            <div class="filter-pill">Health & Welfare</div>
+                                            <div class="filter-pill">Housing</div>
+                                            <div class="filter-pill">Infrastructure</div>
+                                            <div class="filter-pill">Employment</div>
+                                            <div class="filter-pill">Financial</div>
+                                            <div class="filter-pill">Welfare</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="mb-3">Search Schemes</h5>
+                                        <div class="scheme-search">
+                                            <i class="fas fa-search"></i>
+                                            <input type="text" class="form-control" placeholder="Search for schemes...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Scheme Listing -->
+                        <div class="row" id="scheme-container">
+                            <!-- Schemes will be loaded dynamically from the backend -->
+                            <div class="col-12 text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Loading schemes...</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <nav aria-label="Scheme navigation">
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+            document.getElementById('sidebar-placeholder').innerHTML = data;
+        });
+    </script>
+    <script src="js/schemes.js"></script>
+</body>
+</html>

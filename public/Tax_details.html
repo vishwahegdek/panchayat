@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Village Panchayat - Tax Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .main-title {
+            font-size: 24px;
+            color: #333;
+            margin: 0;
+        }
+        .form-container {
+            padding: 20px;
+        }
+        .form-header {
+            background-color: #2e8b57;
+            color: white;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+        .form-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .info-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #2e8b57;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .form-col {
+            flex: 1;
+        }
+        .required:after {
+            content: " *";
+            color: red;
+        }
+        .btn-container {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #246b42;
+        }
+        .user-dropdown {
+            float: right;
+            margin-top: -30px;
+            padding: 8px 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="main-title">Pay Tax</h1>
+        <div class="user-dropdown">
+            <span>👤 User ▼</span>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Village Panchayat Tax Payment Form</h2>
+        </div>
+
+        <div class="info-box">
+            <i class="info-icon">ℹ️</i> 
+            <span>Transaction ID: TXN-2025-85046</span>
+        </div>
+
+        <form>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label class="required" for="citizen-name">Citizen Name</label>
+                        <input type="text" id="citizen-name" placeholder="Enter full name">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label class="required" for="village-name">Village Name</label>
+                        <input type="text" id="village-name" placeholder="Enter village name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="aadhar-number">Aadhar Number</label>
+                <input type="text" id="aadhar-number" placeholder="12-digit Aadhar number">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="property-id">Property ID</label>
+                <input type="text" id="property-id" placeholder="Enter property identification number">
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label class="required" for="tax-type">Tax Type</label>
+                        <select id="tax-type">
+                            <option value="">Select tax type</option>
+                            <option value="property">Property Tax</option>
+                            <option value="water">Water Tax</option>
+                            <option value="streetlight">Streetlight Tax</option>
+                            <option value="Birth">Birth Certificate Tax</option>
+                            <option value="Death">Death Certificate Tax</option>
+                            <option value="Advertise">Advertisement Tax</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label class="required" for="financial-year">Financial Year</label>
+                        <select id="financial-year">
+                            <option value="">Select financial year</option>
+                            <option value="2024-2025">2024-2025</option>
+                            <option value="2023-2024">2023-2024</option>
+                            <option value="2022-2023">2022-2023</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label class="required" for="amount">Amount (₹)</label>
+                        <input type="number" id="amount" placeholder="Enter amount to pay">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number</label>
+                        <input type="tel" id="mobile" placeholder="10-digit mobile number">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="remarks">Remarks</label>
+                <textarea id="remarks" rows="4" placeholder="Any additional information or remarks"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="payment-method">Payment Method</label>
+                <select id="payment-method">
+                    <option value="">Select payment method</option>
+                    <option value="upi">UPI</option>
+                    <option value="card">Debit/Credit Card</option>
+                    <option value="netbanking">Net Banking</option>
+                    <option value="cash">Cash at Counter</option>
+                </select>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="btn">Calculate Tax</button>
+                <button type="submit" class="btn">Proceed to Payment</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
