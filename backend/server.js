@@ -5,6 +5,9 @@ const schemeRoutes = require("./schemeHandler.js");
 const applicationRoutes = require("./applicationHandler.js");
 const feedbackRoutes = require("./feedbackHandler.js");
 const certificateRoutes = require("./certificateHandler.js");
+const authRoutes = require("./authHandler.js");
+const villagerRoutes = require("./villagerHandler.js");
+
 const app = express();
 const PORT = 3000;
 
@@ -18,6 +21,8 @@ app.use("/api", schemeRoutes);
 app.use("/api", applicationRoutes);
 app.use("/api", feedbackRoutes);
 app.use("/api", certificateRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api", villagerRoutes);
 
 // Start server
 app.listen(PORT, () => {
