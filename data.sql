@@ -26,10 +26,10 @@ INSERT INTO schemes (
 
 
 INSERT INTO villager (
-    aadhar_num, first_name, last_name, father_name, mother_name, dob, gender, contact_num, caste, village_name
+    aadhar_num, first_name, last_name, father_name, mother_name, dob, gender, contact_num, caste, village_name, passwd
 ) VALUES
-('123456789012', 'Ravi', 'Kumar', 'Suresh Kumar', 'Meena Devi', '1985-06-15', 'Male', '9876543210', 'OBC', 'Rampur'),
-('234567890123', 'Sita', 'Devi', 'Raghunath Prasad', 'Kamla Devi', '1990-09-25', 'Female', '9876543211', 'SC', 'Lakshmipur'),
-('345678901234', 'Amit', 'Sharma', 'Mahesh Sharma', 'Sunita Sharma', '1992-01-10', 'Male', '9876543212', 'General', 'Bhagwanpur'),
-('456789012345', 'Pooja', 'Verma', 'Dinesh Verma', 'Neelam Verma', '1995-11-05', 'Female', '9876543213', 'OBC', 'Rampur'),
-('567890123456', 'Ramesh', 'Yadav', 'Shyam Yadav', 'Radha Yadav', '1988-03-20', 'Male', '9876543214', 'OBC', 'Lakshmipur');
+('123456789012', 'Ravi', 'Kumar', 'Suresh Kumar', 'Meena Devi', '1985-06-15', 'Male', '9876543210', 'OBC', 'Rampur', 'ravi'),
+('234567890123', 'Sita', 'Devi', 'Raghunath Prasad', 'Kamla Devi', '1990-09-25', 'Female', '9876543211', 'SC', 'Lakshmipur', 'sita'),
+('345678901234', 'Amit', 'Sharma', 'Mahesh Sharma', 'Sunita Sharma', '1992-01-10', 'Male', '9876543212', 'General', 'Bhagwanpur', 'amit'),
+('456789012345', 'Pooja', 'Verma', 'Dinesh Verma', 'Neelam Verma', '1995-11-05', 'Female', '9876543213', 'OBC', 'Rampur', 'pooja'),
+('567890123456', 'Ramesh', 'Yadav', 'Shyam Yadav', 'Radha Yadav', '1988-03-20', 'Male', '9876543214', 'OBC', 'Lakshmipur', 'ramesh');

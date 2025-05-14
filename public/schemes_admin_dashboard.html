@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schemes Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #fff;
+            border-bottom: 1px solid #fff;
+            margin-bottom: -1px;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], 
+        input[type="number"], 
+        input[type="date"], 
+        select, 
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button.update {
+            background-color: #2196F3;
+        }
+        button.delete {
+            background-color: #f44336;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-container input {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination button {
+            margin: 0 5px;
+            background-color: #ddd;
+            color: black;
+        }
+        .pagination button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+        .alert-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+        .hide {
+            display: none;
+        }
+        .filter-container {
+            margin-bottom: 20px;
+        }
+        .filter-container select {
+            padding: 10px;
+            width: 200px;
+            margin-right: 10px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Schemes Admin Dashboard</h1>
+        
+        <div id="alertBox" class="alert hide"></div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="openTab(event, 'viewSchemes')">View Schemes</div>
+            <div class="tab" onclick="openTab(event, 'addScheme')">Add New Scheme</div>
+            <div class="tab" onclick="openTab(event, 'editScheme')">Edit Scheme</div>
+        </div>
+        
+        <div id="viewSchemes" class="tab-content active">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search schemes...">
+                <button onclick="searchSchemes()">Search</button>
+                <button onclick="loadSchemes()">Show All</button>
+            </div>
+            
+            <div class="filter-container">
+                <select id="filterType" onchange="filterByType()">
+                    <option value="">Filter by Type</option>
+                    <option value="Education">Education</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Employment">Employment</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Social Welfare">Social Welfare</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div id="loadingSchemes" class="loading hide">Loading schemes...</div>
+            
+            <table id="schemesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Age Limit</th>
+                        <th>Beneficiaries</th>
+                        <th>Budget</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="schemesTableBody">
+                    <!-- Table content will be loaded dynamically -->
+                </tbody>
+            </table>
+            
+            <div class="pagination">
+                <button onclick="prevPage()">Previous</button>
+                <span id="currentPage">Page 1</span>
+                <button onclick="nextPage()">Next</button>
+            </div>
+        </div>
+        
+        <div id="addScheme" class="tab-content">
+            <h2>Add New Scheme</h2>
+            <form id="addSchemeForm">
+                <div class="form-group">
+                    <label for="scheme_name">Scheme Name *</label>
+                    <input type="text" id="scheme_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="scheme_type">Scheme Type</label>
+                    <select id="scheme_type">
+                        <option value="">Select Type</option>
+                        <option value="Education">Education</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Employment">Employment</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Social Welfare">Social Welfare</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <input type="date" id="start_date">
+                </div>
+                
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <input type="date" id="end_date">
+                </div>
+                
+                <div class="form-group">
+                    <label for="age_limit">Age Limit</label>
+                    <input type="number" id="age_limit" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="beneficiary_count">Beneficiary Count</label>
+                    <input type="number" id="beneficiary_count" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="total_budget">Total Budget</label>
+                    <input type="number" id="total_budget" step="0.01" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="details">Details</label>
+                    <textarea id="details" rows="4"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+                
+                <button type="submit">Add Scheme</button>
+            </form>
+        </div>
+        
+        <div id="editScheme" class="tab-content">
+            <h2>Edit Scheme</h2>
+            <form id="editSchemeForm">
+                <input type="hidden" id="edit_scheme_id">
+                
+                <div class="form-group">
+                    <label for="edit_scheme_name">Scheme Name *</label>
+                    <input type="text" id="edit_scheme_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_scheme_type">Scheme Type</label>
+                    <select id="edit_scheme_type">
+                        <option value="">Select Type</option>
+                        <option value="Education">Education</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Employment">Employment</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Social Welfare">Social Welfare</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_start_date">Start Date</label>
+                    <input type="date" id="edit_start_date">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_end_date">End Date</label>
+                    <input type="date" id="edit_end_date">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_age_limit">Age Limit</label>
+                    <input type="number" id="edit_age_limit" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_beneficiary_count">Beneficiary Count</label>
+                    <input type="number" id="edit_beneficiary_count" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_total_budget">Total Budget</label>
+                    <input type="number" id="edit_total_budget" step="0.01" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_details">Details</label>
+                    <textarea id="edit_details" rows="4"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_status">Status</label>
+                    <select id="edit_status">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+                
+                <button type="submit">Update Scheme</button>
+                <button type="button" onclick="cancelEdit()">Cancel</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // API endpoint
+        const API_URL = 'http://localhost:3000/api/schemes';
+        
+        // Store all schemes
+        let schemes = [];
+        
+        // Pagination variables
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        
+        // DOM Ready
+        document.addEventListener("DOMContentLoaded", function() {
+            loadSchemes();
+            
+            // Add scheme form submission
+            document.getElementById("addSchemeForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                addScheme();
+            });
+            
+            // Edit scheme form submission
+            document.getElementById("editSchemeForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                updateScheme();
+            });
+            
+            // Search on enter key
+            document.getElementById("searchInput").addEventListener("keypress", function(e) {
+                if (e.key === "Enter") {
+                    searchSchemes();
+                }
+            });
+        });
+        
+        // Open tab function
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabs = document.getElementsByClassName("tab");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            
+            // If switching to view tab, refresh schemes
+            if (tabName === "viewSchemes") {
+                loadSchemes();
+            }
+        }
+        
+        // Format date for display
+        function formatDate(dateStr) {
+            if (!dateStr) return "-";
+            
+            const date = new Date(dateStr);
+            if (isNaN(date.getTime())) return dateStr;
+            
+            return date.toLocaleDateString();
+        }
+        
+        // Load schemes from API
+        function loadSchemes() {
+            const loadingElement = document.getElementById("loadingSchemes");
+            const tableBody = document.getElementById("schemesTableBody");
+            
+            // Show loading indicator
+            loadingElement.classList.remove("hide");
+            tableBody.innerHTML = "";
+            
+            // Reset filter
+            document.getElementById("filterType").value = "";
+            
+            fetch(API_URL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    schemes = data;
+                    displaySchemes(schemes);
+                    loadingElement.classList.add("hide");
+                })
+                .catch(error => {
+                    console.error("Error fetching schemes:", error);
+                    showAlert("Error loading schemes: " + error.message, "danger");
+                    loadingElement.classList.add("hide");
+                    tableBody.innerHTML = "<tr><td colspan='10' style='text-align: center;'>Failed to load schemes</td></tr>";
+                });
+        }
+        
+        // Display schemes in table with pagination
+        function displaySchemes(schemesToDisplay) {
+            const tableBody = document.getElementById("schemesTableBody");
+            tableBody.innerHTML = "";
+            
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedSchemes = schemesToDisplay.slice(startIndex, endIndex);
+            
+            if (paginatedSchemes.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='10' style='text-align: center;'>No schemes found</td></tr>";
+                return;
+            }
+            
+            paginatedSchemes.forEach(scheme => {
+                const row = document.createElement("tr");
+                
+                row.innerHTML = `
+                    <td>${scheme.scheme_id}</td>
+                    <td>${scheme.scheme_name}</td>
+                    <td>${scheme.scheme_type || "-"}</td>
+                    <td>${formatDate(scheme.start_date)}</td>
+                    <td>${formatDate(scheme.end_date)}</td>
+                    <td>${scheme.age_limit !== null ? scheme.age_limit : "-"}</td>
+                    <td>${scheme.beneficiary_count !== null ? scheme.beneficiary_count.toLocaleString() : "-"}</td>
+                    <td>${scheme.total_budget !== null ? parseFloat(scheme.total_budget).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "-"}</td>
+                    <td>${scheme.status}</td>
+                    <td>
+                        <button class="update" onclick="editScheme(${scheme.scheme_id})">Edit</button>
+                        <button class="delete" onclick="deleteScheme(${scheme.scheme_id})">Delete</button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            document.getElementById("currentPage").textContent = `Page ${currentPage}`;
+        }
+        
+        // Filter schemes by type
+        function filterByType() {
+            const filterType = document.getElementById("filterType").value;
+            
+            if (!filterType) {
+                displaySchemes(schemes);
+                return;
+            }
+            
+            const loadingElement = document.getElementById("loadingSchemes");
+            loadingElement.classList.remove("hide");
+            
+            fetch(`${API_URL}/filter/${filterType}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Reset pagination
+                    currentPage = 1;
+                    displaySchemes(data);
+                    loadingElement.classList.add("hide");
+                })
+                .catch(error => {
+                    console.error("Error filtering schemes:", error);
+                    showAlert("Error filtering schemes: " + error.message, "danger");
+                    loadingElement.classList.add("hide");
+                });
+        }
+        
+        // Add new scheme
+        function addScheme() {
+            const newScheme = {
+                scheme_name: document.getElementById("scheme_name").value,
+                scheme_type: document.getElementById("scheme_type").value,
+                start_date: document.getElementById("start_date").value || null,
+                end_date: document.getElementById("end_date").value || null,
+                age_limit: document.getElementById("age_limit").value ? parseInt(document.getElementById("age_limit").value) : null,
+                beneficiary_count: document.getElementById("beneficiary_count").value ? parseInt(document.getElementById("beneficiary_count").value) : null,
+                total_budget: document.getElementById("total_budget").value ? parseFloat(document.getElementById("total_budget").value) : null,
+                details: document.getElementById("details").value,
+                status: document.getElementById("status").value
+            };
+            
+            fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newScheme),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Reset the form
+                document.getElementById("addSchemeForm").reset();
+                
+                // Show success message
+                showAlert("Scheme added successfully!", "success");
+                
+                // Switch to view tab and reload schemes
+                openTab({currentTarget: document.getElementsByClassName("tab")[0]}, "viewSchemes");
+            })
+            .catch(error => {
+                console.error("Error adding scheme:", error);
+                showAlert("Error adding scheme: " + error.message, "danger");
+            });
+        }
+        
+        // Edit scheme - populate form
+        function editScheme(schemeId) {
+            const loadingElement = document.getElementById("loadingSchemes");
+            loadingElement.classList.remove("hide");
+            
+            fetch(`${API_URL}/${schemeId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(scheme => {
+                    document.getElementById("edit_scheme_id").value = scheme.scheme_id;
+                    document.getElementById("edit_scheme_name").value = scheme.scheme_name;
+                    document.getElementById("edit_scheme_type").value = scheme.scheme_type || "";
+                    document.getElementById("edit_start_date").value = scheme.start_date ? scheme.start_date.split('T')[0] : "";
+                    document.getElementById("edit_end_date").value = scheme.end_date ? scheme.end_date.split('T')[0] : "";
+                    document.getElementById("edit_age_limit").value = scheme.age_limit !== null ? scheme.age_limit : "";
+                    document.getElementById("edit_beneficiary_count").value = scheme.beneficiary_count !== null ? scheme.beneficiary_count : "";
+                    document.getElementById("edit_total_budget").value = scheme.total_budget !== null ? scheme.total_budget : "";
+                    document.getElementById("edit_details").value = scheme.details || "";
+                    document.getElementById("edit_status").value = scheme.status;
+                    
+                    // Switch to edit tab
+                    openTab({currentTarget: document.getElementsByClassName("tab")[2]}, "editScheme");
+                    loadingElement.classList.add("hide");
+                })
+                .catch(error => {
+                    console.error("Error fetching scheme for edit:", error);
+                    showAlert("Error loading scheme details: " + error.message, "danger");
+                    loadingElement.classList.add("hide");
+                });
+        }
+        
+        // Update scheme
+        function updateScheme() {
+            const schemeId = document.getElementById("edit_scheme_id").value;
+            
+            const updatedScheme = {
+                scheme_name: document.getElementById("edit_scheme_name").value,
+                scheme_type: document.getElementById("edit_scheme_type").value,
+                start_date: document.getElementById("edit_start_date").value || null,
+                end_date: document.getElementById("edit_end_date").value || null,
+                age_limit: document.getElementById("edit_age_limit").value ? parseInt(document.getElementById("edit_age_limit").value) : null,
+                beneficiary_count: document.getElementById("edit_beneficiary_count").value ? parseInt(document.getElementById("edit_beneficiary_count").value) : null,
+                total_budget: document.getElementById("edit_total_budget").value ? parseFloat(document.getElementById("edit_total_budget").value) : null,
+                details: document.getElementById("edit_details").value,
+                status: document.getElementById("edit_status").value
+            };
+            
+            fetch(`${API_URL}/${schemeId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedScheme),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Show success message
+                showAlert("Scheme updated successfully!", "success");
+                
+                // Switch to view tab and reload schemes
+                openTab({currentTarget: document.getElementsByClassName("tab")[0]}, "viewSchemes");
+            })
+            .catch(error => {
+                console.error("Error updating scheme:", error);
+                showAlert("Error updating scheme: " + error.message, "danger");
+            });
+        }
+        
+        // Cancel edit
+        function cancelEdit() {
+            document.getElementById("editSchemeForm").reset();
+            openTab({currentTarget: document.getElementsByClassName("tab")[0]}, "viewSchemes");
+        }
+        
+        // Delete scheme
+        function deleteScheme(schemeId) {
+            if (confirm("Are you sure you want to delete this scheme?")) {
+                fetch(`${API_URL}/${schemeId}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    showAlert("Scheme deleted successfully!", "success");
+                    loadSchemes();
+                })
+                .catch(error => {
+                    console.error("Error deleting scheme:", error);
+                    showAlert("Error deleting scheme: " + error.message, "danger");
+                });
+            }
+        }
+        
+        // Search schemes
+        function searchSchemes() {
+            const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+            
+            if (!searchTerm) {
+                displaySchemes(schemes);
+                return;
+            }
+            
+            const filteredSchemes = schemes.filter(scheme => 
+                scheme.scheme_name.toLowerCase().includes(searchTerm) || 
+                (scheme.scheme_type && scheme.scheme_type.toLowerCase().includes(searchTerm)) || 
+                (scheme.details && scheme.details.toLowerCase().includes(searchTerm)) ||
+                scheme.status.toLowerCase().includes(searchTerm)
+            );
+            
+            // Reset pagination when searching
+            currentPage = 1;
+            displaySchemes(filteredSchemes);
+        }
+        
+        // Pagination functions
+        function nextPage() {
+            const totalPages = Math.ceil(schemes.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displaySchemes(schemes);
+            }
+        }
+        
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displaySchemes(schemes);
+            }
+        }
+        
+        // Show alert message
+        function showAlert(message, type) {
+            const alertBox = document.getElementById("alertBox");
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type}`;
+            
+            // Show the alert
+            alertBox.classList.remove("hide");
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                alertBox.classList.add("hide");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

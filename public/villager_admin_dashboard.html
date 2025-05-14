@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villager Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #fff;
+            border-bottom: 1px solid #fff;
+            margin-bottom: -1px;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], 
+        input[type="date"], 
+        select, 
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button.update {
+            background-color: #2196F3;
+        }
+        button.delete {
+            background-color: #f44336;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-container input {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination button {
+            margin: 0 5px;
+            background-color: #ddd;
+            color: black;
+        }
+        .pagination button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+        .alert-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Villager Admin Dashboard</h1>
+        
+        <div id="alertBox" class="alert hide"></div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="openTab(event, 'viewVillagers')">View Villagers</div>
+            <div class="tab" onclick="openTab(event, 'addVillager')">Add New Villager</div>
+            <div class="tab" onclick="openTab(event, 'editVillager')">Edit Villager</div>
+        </div>
+        
+        <div id="viewVillagers" class="tab-content active">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search villagers...">
+                <button onclick="searchVillagers()">Search</button>
+                <button onclick="loadVillagers()">Show All</button>
+            </div>
+            
+            <table id="villagersTable">
+                <thead>
+                    <tr>
+                        <th>Aadhar Number</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Father's Name</th>
+                        <th>Mother's Name</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Contact Number</th>
+                        <th>Caste</th>
+                        <th>Village</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="villagersTableBody">
+                    <!-- Table content will be loaded dynamically -->
+                </tbody>
+            </table>
+            
+            <div class="pagination">
+                <button onclick="prevPage()">Previous</button>
+                <span id="currentPage">Page 1</span>
+                <button onclick="nextPage()">Next</button>
+            </div>
+        </div>
+        
+        <div id="addVillager" class="tab-content">
+            <h2>Add New Villager</h2>
+            <form id="addVillagerForm">
+                <div class="form-group">
+                    <label for="aadhar_num">Aadhar Number *</label>
+                    <input type="text" id="aadhar_num" required maxlength="12" pattern="[0-9]{12}" title="Aadhar number must be 12 digits">
+                </div>
+                
+                <div class="form-group">
+                    <label for="first_name">First Name *</label>
+                    <input type="text" id="first_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="father_name">Father's Name</label>
+                    <input type="text" id="father_name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="mother_name">Mother's Name</label>
+                    <input type="text" id="mother_name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob">
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact_num">Contact Number</label>
+                    <input type="text" id="contact_num" maxlength="15" pattern="[0-9]+" title="Contact number should contain only digits">
+                </div>
+                
+                <div class="form-group">
+                    <label for="caste">Caste</label>
+                    <input type="text" id="caste">
+                </div>
+                
+                <div class="form-group">
+                    <label for="village_name">Village Name</label>
+                    <input type="text" id="village_name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="passwd">Password</label>
+                    <input type="password" id="passwd">
+                </div>
+                
+                <button type="submit">Add Villager</button>
+            </form>
+        </div>
+        
+        <div id="editVillager" class="tab-content">
+            <h2>Edit Villager</h2>
+            <form id="editVillagerForm">
+                <div class="form-group">
+                    <label for="edit_aadhar_num">Aadhar Number *</label>
+                    <input type="text" id="edit_aadhar_num" required maxlength="12" pattern="[0-9]{12}" title="Aadhar number must be 12 digits" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_first_name">First Name *</label>
+                    <input type="text" id="edit_first_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_last_name">Last Name</label>
+                    <input type="text" id="edit_last_name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_father_name">Father's Name</label>
+                    <input type="text" id="edit_father_name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_mother_name">Mother's Name</label>
+                    <input type="text" id="edit_mother_name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_dob">Date of Birth</label>
+                    <input type="date" id="edit_dob">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_gender">Gender</label>
+                    <select id="edit_gender">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_contact_num">Contact Number</label>
+                    <input type="text" id="edit_contact_num" maxlength="15" pattern="[0-9]+" title="Contact number should contain only digits">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_caste">Caste</label>
+                    <input type="text" id="edit_caste">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_village_name">Village Name</label>
+                    <input type="text" id="edit_village_name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_passwd">Password</label>
+                    <input type="password" id="edit_passwd">
+                </div>
+                
+                <button type="submit">Update Villager</button>
+                <button type="button" onclick="cancelEdit()">Cancel</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // API Base URL
+        const API_BASE_URL = 'http://localhost:3000/api';
+        
+        // Pagination variables
+        let currentPage = 1;
+        let itemsPerPage = 10;
+        let totalPages = 1;
+        
+        // DOM Ready
+        document.addEventListener("DOMContentLoaded", function() {
+            loadVillagers();
+            
+            // Add villager form submission
+            document.getElementById("addVillagerForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                addVillager();
+            });
+            
+            // Edit villager form submission
+            document.getElementById("editVillagerForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                updateVillager();
+            });
+        });
+        
+        // Open tab function
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabs = document.getElementsByClassName("tab");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // Load villagers from API
+        function loadVillagers() {
+            fetch(`${API_BASE_URL}/villagers?page=${currentPage}&limit=${itemsPerPage}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const villagers = data.villagers;
+                    totalPages = data.pagination.totalPages;
+                    
+                    const tableBody = document.getElementById("villagersTableBody");
+                    tableBody.innerHTML = "";
+                    
+                    if (villagers.length === 0) {
+                        tableBody.innerHTML = "<tr><td colspan='11' style='text-align: center;'>No villagers found</td></tr>";
+                        return;
+                    }
+                    
+                    villagers.forEach(villager => {
+                        const row = document.createElement("tr");
+                        
+                        row.innerHTML = `
+                            <td>${villager.aadhar_num}</td>
+                            <td>${villager.first_name}</td>
+                            <td>${villager.last_name || "-"}</td>
+                            <td>${villager.father_name || "-"}</td>
+                            <td>${villager.mother_name || "-"}</td>
+                            <td>${villager.dob ? new Date(villager.dob).toLocaleDateString() : "-"}</td>
+                            <td>${villager.gender || "-"}</td>
+                            <td>${villager.contact_num || "-"}</td>
+                            <td>${villager.caste || "-"}</td>
+                            <td>${villager.village_name || "-"}</td>
+                            <td>
+                                <button class="update" onclick="editVillager('${villager.aadhar_num}')">Edit</button>
+                                <button class="delete" onclick="deleteVillager('${villager.aadhar_num}')">Delete</button>
+                            </td>
+                        `;
+                        
+                        tableBody.appendChild(row);
+                    });
+                    
+                    document.getElementById("currentPage").textContent = `Page ${currentPage} of ${totalPages}`;
+                })
+                .catch(error => {
+                    console.error('Error loading villagers:', error);
+                    showAlert("Error loading villagers: " + error.message, "danger");
+                });
+        }
+        
+        // Add new villager
+        function addVillager() {
+            const newVillager = {
+                aadhar_num: document.getElementById("aadhar_num").value,
+                first_name: document.getElementById("first_name").value,
+                last_name: document.getElementById("last_name").value,
+                father_name: document.getElementById("father_name").value,
+                mother_name: document.getElementById("mother_name").value,
+                dob: document.getElementById("dob").value,
+                gender: document.getElementById("gender").value,
+                contact_num: document.getElementById("contact_num").value,
+                caste: document.getElementById("caste").value,
+                village_name: document.getElementById("village_name").value,
+                passwd: document.getElementById("passwd").value
+            };
+            
+            fetch(`${API_BASE_URL}/villagers`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newVillager),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 409) {
+                        throw new Error('Villager with this Aadhar number already exists');
+                    }
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Reset the form
+                document.getElementById("addVillagerForm").reset();
+                
+                // Show success message
+                showAlert("Villager added successfully!", "success");
+                
+                // Switch to view tab and reload villagers
+                openTab({currentTarget: document.getElementsByClassName("tab")[0]}, "viewVillagers");
+                loadVillagers();
+            })
+            .catch(error => {
+                console.error('Error adding villager:', error);
+                showAlert(error.message, "danger");
+            });
+        }
+        
+        // Edit villager - populate form
+        function editVillager(aadharNum) {
+            fetch(`${API_BASE_URL}/villagers/${aadharNum}`)
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            throw new Error('Villager not found');
+                        }
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(villager => {
+                    document.getElementById("edit_aadhar_num").value = villager.aadhar_num;
+                    document.getElementById("edit_first_name").value = villager.first_name;
+                    document.getElementById("edit_last_name").value = villager.last_name || "";
+                    document.getElementById("edit_father_name").value = villager.father_name || "";
+                    document.getElementById("edit_mother_name").value = villager.mother_name || "";
+                    document.getElementById("edit_dob").value = villager.dob ? new Date(villager.dob).toISOString().split('T')[0] : "";
+                    document.getElementById("edit_gender").value = villager.gender || "";
+                    document.getElementById("edit_contact_num").value = villager.contact_num || "";
+                    document.getElementById("edit_caste").value = villager.caste || "";
+                    document.getElementById("edit_village_name").value = villager.village_name || "";
+                    
+                    // Password is not returned by the API for security reasons
+                    document.getElementById("edit_passwd").value = "";
+                    
+                    // Switch to edit tab
+                    openTab({currentTarget: document.getElementsByClassName("tab")[2]}, "editVillager");
+                })
+                .catch(error => {
+                    console.error('Error fetching villager details:', error);
+                    showAlert(error.message, "danger");
+                });
+        }
+        
+        // Update villager
+        function updateVillager() {
+            const aadharNum = document.getElementById("edit_aadhar_num").value;
+            
+            const updatedVillager = {
+                first_name: document.getElementById("edit_first_name").value,
+                last_name: document.getElementById("edit_last_name").value,
+                father_name: document.getElementById("edit_father_name").value,
+                mother_name: document.getElementById("edit_mother_name").value,
+                dob: document.getElementById("edit_dob").value,
+                gender: document.getElementById("edit_gender").value,
+                contact_num: document.getElementById("edit_contact_num").value,
+                caste: document.getElementById("edit_caste").value,
+                village_name: document.getElementById("edit_village_name").value,
+                passwd: document.getElementById("edit_passwd").value
+            };
+            
+            // Remove password if it's empty to avoid overwriting with empty string
+            if (!updatedVillager.passwd) {
+                delete updatedVillager.passwd;
+            }
+            
+            fetch(`${API_BASE_URL}/villagers/${aadharNum}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedVillager),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error('Villager not found');
+                    }
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Show success message
+                showAlert("Villager updated successfully!", "success");
+                
+                // Switch to view tab and reload villagers
+                openTab({currentTarget: document.getElementsByClassName("tab")[0]}, "viewVillagers");
+                loadVillagers();
+            })
+            .catch(error => {
+                console.error('Error updating villager:', error);
+                showAlert(error.message, "danger");
+            });
+        }
+        
+        // Cancel edit
+        function cancelEdit() {
+            document.getElementById("editVillagerForm").reset();
+            openTab({currentTarget: document.getElementsByClassName("tab")[0]}, "viewVillagers");
+        }
+        
+        // Delete villager
+        function deleteVillager(aadharNum) {
+            if (confirm("Are you sure you want to delete this villager?")) {
+                fetch(`${API_BASE_URL}/villagers/${aadharNum}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            throw new Error('Villager not found');
+                        }
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    showAlert("Villager deleted successfully!", "success");
+                    loadVillagers();
+                })
+                .catch(error => {
+                    console.error('Error deleting villager:', error);
+                    showAlert(error.message, "danger");
+                });
+            }
+        }
+        
+        // Search villagers
+        function searchVillagers() {
+            const searchTerm = document.getElementById("searchInput").value.trim();
+            
+            if (!searchTerm) {
+                // If search term is empty, load all villagers
+                loadVillagers();
+                return;
+            }
+            
+            fetch(`${API_BASE_URL}/villagers/search?term=${encodeURIComponent(searchTerm)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(villagers => {
+                    const tableBody = document.getElementById("villagersTableBody");
+                    tableBody.innerHTML = "";
+                    
+                    if (villagers.length === 0) {
+                        tableBody.innerHTML = "<tr><td colspan='11' style='text-align: center;'>No villagers found</td></tr>";
+                        return;
+                    }
+                    
+                    villagers.forEach(villager => {
+                        const row = document.createElement("tr");
+                        
+                        row.innerHTML = `
+                            <td>${villager.aadhar_num}</td>
+                            <td>${villager.first_name}</td>
+                            <td>${villager.last_name || "-"}</td>
+                            <td>${villager.father_name || "-"}</td>
+                            <td>${villager.mother_name || "-"}</td>
+                            <td>${villager.dob ? new Date(villager.dob).toLocaleDateString() : "-"}</td>
+                            <td>${villager.gender || "-"}</td>
+                            <td>${villager.contact_num || "-"}</td>
+                            <td>${villager.caste || "-"}</td>
+                            <td>${villager.village_name || "-"}</td>
+                            <td>
+                                <button class="update" onclick="editVillager('${villager.aadhar_num}')">Edit</button>
+                                <button class="delete" onclick="deleteVillager('${villager.aadhar_num}')">Delete</button>
+                            </td>
+                        `;
+                        
+                        tableBody.appendChild(row);
+                    });
+                    
+                    // Hide pagination during search results
+                    document.querySelector(".pagination").style.display = "none";
+                })
+                .catch(error => {
+                    console.error('Error searching villagers:', error);
+                    showAlert("Error searching villagers: " + error.message, "danger");
+                });
+        }
+        
+        // Pagination functions
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                loadVillagers();
+            }
+        }
+        
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                loadVillagers();
+            }
+        }
+        
+        // Show alert message
+        function showAlert(message, type) {
+            const alertBox = document.getElementById("alertBox");
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type}`;
+            
+            // Show the alert
+            alertBox.classList.remove("hide");
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                alertBox.classList.add("hide");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
